@@ -1,0 +1,11 @@
+{
+  "name": "Campaign Commander mailing proxy",
+  "version": "1.0.0",
+  "description": "API Documentation",
+  "title": "Mailing Proxy",
+  "url": "http://api.crakrevenue.com/crakrevenue-mailing",
+  "template": {
+    "withCompare": true,
+    "withGenerator": true
+  }
+}

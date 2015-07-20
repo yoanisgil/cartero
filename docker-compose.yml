@@ -1,0 +1,45 @@
+router:
+  image: crakmedia/cartero
+  links:
+    - redis
+  environment:
+    REDIS_HOST: redis
+    REDIS_PORT: 6379
+    HTTP_LISTEN: 0.0.0.0
+    HTTP_PORT: 4000
+    KUE_UI_LISTEN_PORT: 4001
+    KUE_UI_LISTEN_INTERFACE: 0.0.0.0
+    CR_EMAIL_ATTEMPTS: 5 # This is the default but it's set here for documentation purposes.
+    CR_EMAIL_DELAY: 0.5  # Samve as above
+    SERVER_SHUTDOWN_WAIT_TIME: 2 # Samve as above
+  ports:
+    - 4000:4000
+    - 4001:4001
+  command: ./node_modules/.bin/nodemon --exec npm run babel-node -- server.js
+  volumes:
+    - .:/srv/www
+worker:
+  image: crakmedia/cartero
+  links:
+    - redis
+    - ccservice
+  environment:
+    REDIS_HOST: redis
+    REDIS_PORT: 6379
+    CC_ENDPOINT: http://ccservice/1.0/segmentation/send-email
+    CC_RANDOM: 14E01000050FFE39 # This is the default but it's set here for documentation purposes.
+    CC_ENCRYPT: EdX7CqkmlJnn8SA9MOPvq6HWLDl6Ha3D-jjYe99ALcPQK7o # Same as above
+    CC_TEMPLATE_ID: 1681416 # Samve as above
+    QUEUE_SHUTDOWN_WAITTIME: 2 # Samve as above
+  volumes:
+    - .:/srv/www
+  command: ./node_modules/.bin/nodemon --exec npm run babel-node -- worker.js
+redis:
+  image: redis:2.8
+  ports:
+    - 6379:6379
+npminstall:
+  image: crakmedia/cartero
+  command: npm install
+  volumes:
+    - .:/srv/www
