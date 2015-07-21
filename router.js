@@ -10,24 +10,24 @@ import joi from 'joi';
 import kueFactory from './kue-factory';
 
 let queue = kueFactory.createQueue();
-let logger = bole('crakrevenue-router');
+let logger = bole('router');
 let router = express.Router();
 
 
 if (null != process.env.KUE_UI_LISTEN_PORT) {
-  let uiListenPort = process.env.KUE_UI_LISTEN_PORT;
-  let uiListenInterface = process.env.KUE_UI_LISTEN_INTERFACE || '127.0.0.1';
+    let uiListenPort = process.env.KUE_UI_LISTEN_PORT;
+    let uiListenInterface = process.env.KUE_UI_LISTEN_INTERFACE || '127.0.0.1';
 
-  kue.app.listen(uiListenPort, uiListenInterface);
+    kue.app.listen(uiListenPort, uiListenInterface);
 }
 
 let validationRules = {
-  body: {
-    email: joi.string().email().required(),
-    subject: joi.string().required(),
-    body_html: joi.string().required(),
-    body_text: joi.string().required()
-  }
+    body: {
+        email: joi.string().email().required(),
+        subject: joi.string().required(),
+        body_html: joi.string().required(),
+        body_text: joi.string().required()
+    }
 }
 
 /**
@@ -63,7 +63,7 @@ let validationRules = {
  *
  * @apiExample {post} Example usage:
  *  {
- *    "email": "ygil@crakmedia.com",
+ *    "email": "gil.yoanis@gmail.com",
  *    "subject": "hello",
  *    "body_html": "Hello world",
  *    "body_text": "Hello world"
@@ -81,29 +81,29 @@ let validationRules = {
  */
 
 let sendEmail = (req, res) => {
-  let email = req.body.email;
-  let subject = req.body.subject;
-  let bodyHtml = req.body.body_html;
-  let bodyText = req.body.body_text;
+    let email = req.body.email;
+    let subject = req.body.subject;
+    let bodyHtml = req.body.body_html;
+    let bodyText = req.body.body_text;
 
-  queue.create('cr-email', {
-    title: "send email",
-    email: email,
-    subject: subject,
-    body_html: bodyHtml,
-    body_text: bodyText
-  }).attempts(process.env.CR_EMAIL_ATTEMPTS || 5)
-    .delay((process.env.CR_EMAIL_DELAY || 0.5) * 1000)
-    .backoff({type: 'exponential'})
-    .save((err) => {
-      if (!err) {
-        logger.info("Created task to send email to %s", email);
-        res.status(200).json({status: 200});
-      } else {
-        logger.error(err);
-        res.status(500).json({status: 500, error: err})
-      }
-    });
+    queue.create('cr-email', {
+        title: "send email",
+        email: email,
+        subject: subject,
+        body_html: bodyHtml,
+        body_text: bodyText
+    }).attempts(process.env.ATTEMPTS || 5)
+        .delay((process.env.DELAY || 0.5) * 1000)
+        .backoff({type: 'exponential'})
+        .save((err) => {
+            if (!err) {
+                logger.info("Created task to send email to %s", email);
+                res.status(200).json({status: 200});
+            } else {
+                logger.error(err);
+                res.status(500).json({status: 500, error: err})
+            }
+        });
 }
 
 router.post("/send-email", validate(validationRules), sendEmail);

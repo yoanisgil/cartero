@@ -1,15 +1,16 @@
 # Cartero
 
-A service to send emails via the in house Campaing Commander mailing service.
+A simple service to send asynchronous emails using [Kue](https://github.com/Automattic/kue)
  
-These services offers a single entry point for sending emails via /POST (see below for further details on how to 
-use it).
+These services offers a single entry point for sending emails via /POST
 
 # Starting the API
+
+    $ docker build -t yoanisgil/cartero .
     
     $ docker run -e REDIS_PORT=SERVER_PORT -e REDIS_HOST=SERVER_IP -d yoanisgil/cartero  node ./node_modules/babel/lib/_babel-node server.js
     
-Since the project is using [Kue](https://github.com/Automattic/kue) as the distributed task scheduler, it requires a working Redis service already configrured. Parameters controlling how to connect to the redis instance can be passed as environment variables:
+Since the project is using [Kue](https://github.com/Automattic/kue) as the distributed task scheduler, it requires a working Redis service already configured. Parameters controlling how to connect to the redis instance can be passed as environment variables:
 
 - REDIS_PREFIX : The key prefix to be used (defaults to ES)
 - REDIS_HOST: The redis server to connect to (defaults to localhost)
@@ -23,32 +24,20 @@ Other environment variables are:
 - HTTP_PORT: The port to listen on for incoming connections.
 - KUE_UI_LISTEN_PORT: Kue's UI interface to listen on for incoming connections.
 - KUE_UI_LISTEN_INTERFACE: Kue's UI port to listen on for incoming connections.
-- CR_EMAIL_ATTEMPTS: In case of delivery failure, number of attempts to try before giving up.
-- CR_EMAIL_DELAY: Number of seconds to wait before attempting to send an email.
+- ATTEMPTS: In case of delivery failure, number of attempts to try before giving up.
+- DELAY: Number of seconds to wait before attempting to send an email.
+- SERVER_SHUTDOWN_WAIT_TIME: Number of seconds to wait before forcing the server to shutdown (i.e grant N seconds to gracefully shutdown the service)
 
     
 # Starting the worker
 
 The worker can be started with:
 
-    $ docker run -e REDIS_PORT=SERVER_PORT -e REDIS_HOST=SERVER_IP -d yoanisgil/cartero  node ./node_modules/babel/lib/_babel-node crakrevenue-worker
+    $ docker run -e REDIS_PORT=SERVER_PORT -e REDIS_HOST=SERVER_IP -d yoanisgil/cartero  node ./node_modules/babel/lib/_babel-node worker
     
 The same environment variables described above can be used, alone with:
 
-- SERVER_SHUTDOWN_WAIT_TIME: Number of seconds to wait before shutting down the worker (so that workers get to finish on going operations).
-- CC_RANDOM: Campaign's commander random token.
-- CC_ENCRYPT: Campaign's commander encryption token. 
-- CC_TEMPLATE_ID: Campaign's commander template id. 
-
-# Building the Docker image
-
-The projet provides a Dockerfile which states how the application must be built. To do so, just run:
-
-    $ docker build -t yoanisgil/cartero .
-    
-and provided that you have sufficient permissions, and that the new image works as expected, you can push to Docker Hub:
-
-    $ docker push yoanisgil/cartero
+- WORKER_SHUTDOWN_WAIT_TIME: Number of seconds to wait before shutting down the worker (so that workers get to finish on going operations).
 
 # Development
 
@@ -60,7 +49,7 @@ A fully functional development environment is available with [Docker](https://do
 
 After which the service documentation is available on `http://localhost:4000/doc`
 
-Documentation can always be regenreated with:
+Documentation can always be regenerated with:
 
     $ docker run --rm -v $(pwd):/srv/www yoanisgil/cartero npm run-script prestart
     

@@ -33,7 +33,7 @@ let gracefulShutdown = () => {
   setTimeout(() => {
     logger.error("Could not close existing connections in time. Forcing shutdown.");
     process.exit(1);
-  }, (process.env.SERVER_SHUTDOWN_WAITTIME || 2) * 1000);
+  }, (process.env.SERVER_SHUTDOWN_WAIT_TIME || 2) * 1000);
 
 }
 
