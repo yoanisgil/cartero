@@ -21,6 +21,7 @@ describe('Client', () => {
   kueMock.delay = sinon.stub().returns(kueMock);
   kueMock.backoff = sinon.stub().returns(kueMock);
   kueMock.create = sinon.stub().returns(kueMock);
+  kueMock.on = sinon.stub().returns(kueMock);
   kueMock.save = sinon.stub();
 
   let email = "user@example.com";

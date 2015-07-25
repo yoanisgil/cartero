@@ -2,6 +2,7 @@ router:
   image: yoanisgil/cartero
   links:
     - redis
+    - worker
   environment:
     REDIS_HOST: redis
     REDIS_PORT: 6379
@@ -26,9 +27,9 @@ worker:
     REDIS_HOST: redis
     REDIS_PORT: 6379
     WORKER_SHUTDOWN_WAIT_TIME: 2 # Samve as above
-    AWS_FROM_EMAIL: gil.yoanis@gmail.com
-    AWS_ACCESS_KEY_ID: AKIAJWUL74IBAVBHHPIQ
-    AWS_SECRET_ACCESS_KEY: Oq3PFSEvdbI9W4/6LUgi6hAYR0CYyM0i+MBbLL2N
+    AWS_FROM_EMAIL: AWS_FROM_EMAIL
+    AWS_ACCESS_KEY_ID: YOUR_AWS_ACCESS_KEY_ID
+    AWS_SECRET_ACCESS_KEY: YOUR_AWS_SECRET_ACCESS_KEY
     AWS_REGION: 'us-west-2'
   volumes:
     - .:/srv/www
