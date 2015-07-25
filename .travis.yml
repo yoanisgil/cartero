@@ -7,4 +7,4 @@ env:
   global:
     - "DOCKER_HUB_URL=https://registry.hub.docker.com/u/yoanisgil/cartero/trigger/ee921f3d-4150-451f-9947-52937f2e5957/"
 after_success:
- curl -H "Content-Type: application/json" --data '{"build": true}' -X POST $DOCKER_HUB_URL
+ - curl -H "Content-Type: application/json" --data '{"build": true}' -X POST $DOCKER_HUB_URL
