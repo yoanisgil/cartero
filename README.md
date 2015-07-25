@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/yoanisgil/cartero.svg?branch=master)](https://travis-ci.org/yoanisgil/cartero)
+
 # Cartero
 
 A simple service to send asynchronous emails using [Kue](https://github.com/Automattic/kue) and Amazon's [SES](http://aws.amazon.com/ses/)
