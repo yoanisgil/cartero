@@ -24,7 +24,7 @@ Documentation can be regenerated with:
 
     $ docker run --rm -v $(pwd):/srv/www yoanisgil/cartero npm run-script prestart
     
-## Running tests
+# Running tests
 
     $ docker run -v $(pwd):/srv/www --rm yoanisgil/cartero npm test
 
