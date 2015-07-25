@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "API Documentation",
   "title": "Mailing Proxy",
-  "url": "http://cartero.com/1.0/",
+  "url": "http://cartero.com/1.0",
   "template": {
     "withCompare": true,
     "withGenerator": true

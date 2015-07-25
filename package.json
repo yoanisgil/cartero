@@ -1,7 +1,7 @@
 {
   "name": "cartero",
   "version": "1.0.0",
-  "description": "Email service",
+  "description": "A simple service to send asynchronous emails using Kue and Amazon's SES",
   "main": "server.js",
   "scripts": {
     "test": "./node_modules/.bin/mocha --compilers js:babel/register",
