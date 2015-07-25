@@ -8,13 +8,15 @@ These services offers a single entry point for sending emails via /POST
 
 A fully functional development environment is available with [Docker](https://docs.docker.com/installation/) and [Compose](https://docs.docker.com/compose/install/):
 
-    $ cp docker-compose.yml.dist docker-compose.yml (**NOTE**: Make sure you properly set SES related environment variables)
+    $ cp docker-compose.yml.dist docker-compose.yml
 
     $ docker-compose run --rm npminstall
     
     $ docker-compose up router
 
 After which the service documentation is available on `http://localhost:4000/doc`
+
+**NOTE**: Make sure you properly set SES related environment variables
 
 Documentation can be regenerated with:
 

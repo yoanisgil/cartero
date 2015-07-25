@@ -18,8 +18,8 @@ let sendEmail = (email, subject, bodyHtml, bodyText) => {
     return awsDelivery.send(process.env.AWS_FROM_EMAIL, email, subject, bodyHtml, bodyText);
 }
 
-queue.process('cr-email', (job, done) => {
-    logger.info("Running task cr-email");
+queue.process('email-queue', (job, done) => {
+    logger.info("Running task email-queue");
 
     sendEmail([job.data.email], job.data.subject, job.data.body_html, job.data.body_text)
         .then((response) => {

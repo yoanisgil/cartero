@@ -86,7 +86,7 @@ let sendEmail = (req, res) => {
     let bodyHtml = req.body.body_html;
     let bodyText = req.body.body_text;
 
-    queue.create('cr-email', {
+    queue.create('email-queue', {
         title: "send email",
         email: email,
         subject: subject,
