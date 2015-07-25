@@ -25,7 +25,7 @@ module.exports.createQueue = () => {
     }).on('job failed attempt', (id, errorMessage, doneAttempts) => {
         logger.debug('Job %s failed with error: %s. Number of attempts :%s', id, errorMessage, doneAttempts);
     }).on('error', (error) => {
-        logger.error('Oops', error);
+        logger.error('Oops!', error);
     });
 
     return queue;
