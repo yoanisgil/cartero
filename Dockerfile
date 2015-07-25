@@ -12,4 +12,5 @@ WORKDIR /srv/www
 # Exclude npm cache from the image
 VOLUME /root/.npm
 
+# By default we install dependencies.
 RUN npm install
